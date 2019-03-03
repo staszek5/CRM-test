@@ -1,0 +1,143 @@
+﻿@model CRM.ViewModels.NewContractorViewModel
+
+
+@using (Html.BeginForm("Save", "Contractor"))
+{
+    <div class="card card-internal">
+        <div class="card-header">Dane Podstawowe</div>
+
+        <div class="card-body">
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Contractor.Name)
+                    @Html.TextBoxFor(m => m.Contractor.Name, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Contractor.ShortName)
+                    @Html.TextBoxFor(m => m.Contractor.ShortName, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Contractor.CooperationTypeId)
+                    @Html.DropDownListFor(m => m.Contractor.CooperationTypeId, new SelectList(Model.CooperationTypes, "Id", "CooperationTypeName"), "Wybierz rodzaj współpracy", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Contractor.ContractorBranchId)
+                    @Html.DropDownListFor(m => m.Contractor.ContractorBranchId, new SelectList(Model.ContractorBranches, "Id", "ContractorBranchName"), "Wybierz branże", new { @class = "form-control" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Contractor.Email)
+                    @Html.TextBoxFor(m => m.Contractor.Email, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Contractor.TelephoneNo)
+                    @Html.TextBoxFor(m => m.Contractor.TelephoneNo, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-8">
+                    @Html.LabelFor(m => m.Contractor.Description)
+                    @Html.TextAreaFor(m => m.Contractor.Description, new { @class = "form-control", placeholder = "Opis kontrahenta" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-internal">
+        <div class="card-header">
+            Adres
+        </div>
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-md-5">
+                    @Html.LabelFor(m => m.Contractor.Street)
+                    @Html.TextBoxFor(m => m.Contractor.Street, new { @class = "form-control", placeholder = "Nazwa ulicy" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Contractor.City)
+                    @Html.TextBoxFor(m => m.Contractor.City, new { @class = "form-control", placeholder = "Nazwa miasta" })
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.LabelFor(m => m.Contractor.ZipCode)
+                    @Html.TextBoxFor(m => m.Contractor.ZipCode, new { @class = "form-control", placeholder = "Kod pocztowy" })
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-5">
+                    @Html.LabelFor(m => m.Contractor.ProvinceId)
+                    @Html.DropDownListFor(m => m.Contractor.ProvinceId, new SelectList(Model.Provinces, "Id", "ProvinceName"), "Wybierz województwo", new { @class = "form-control" })
+                </div>
+                <div class="form-group col-7">
+                    @Html.LabelFor(m => m.Contractor.AdressDetails)
+                    @Html.TextAreaFor(m => m.Contractor.AdressDetails, new { @class = "form-control", placeholder = "Dodatkowe informacje adresowe" })
+                </div>
+            </div>
+            <div class="form-row">
+            </div>
+        </div>
+    </div>
+    <div class="card card-internal">
+        <div class="card-header">
+            Informacje Dodatkowe
+        </div>
+        <div class="card-body">
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Contractor.Nip)
+                    @Html.TextBoxFor(m => m.Contractor.Nip, new { @class = "form-control", placeholder = "NIP" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Contractor.Regon)
+                    @Html.TextBoxFor(m => m.Contractor.Regon, new { @class = "form-control", placeholder = "REGON" })
+
+                </div>
+                <div class="form-group col-md-3">
+
+                    <div class="form-check">
+                        <label style="margin-left:10px; margin-top:35px">
+                            @Html.CheckBoxFor(m => m.Contractor.IsActive, new { @class = "form-check-input" }) Aktywny - podmiot działa na rynku
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    if (Model.Contractor.Id == 0)
+    {
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <button type="submit" class="btn btn-primary btn-block btn-info">Dodaj Pracownika</button>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="form-row">
+            <div class="form-group col-md-2">
+                <button type="submit" class="btn btn-primary btn-block btn-info">Zapisz Zmiany</button>
+            </div>
+            <div class="form-group col-md-2">
+                <div>@Html.ActionLink("Usuń Kontrahenta", "Delete", "Contractor", new { id = Model.Contractor.Id }, new { @class = "btn btn-danger btn-block" })</div>
+            </div>
+        </div>
+    }
+
+
+    @*<div class="form-group">
+
+        @{string buttonName = (Model.Contractor == null) ? "Zapisz" : "Edytuj";}
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary btn-info btn-block">@buttonName</button>
+        </div>
+    </div>*@
+    @Html.HiddenFor(m => m.Contractor.Id)
+
+
+
+}
+
+

@@ -1,0 +1,60 @@
+﻿@model CRM.ViewModels.SearchOfferViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h3>Oferty</h3>
+
+@Html.Partial("~/Views/Partial/_OfferForSearch.cshtml", Model)
+
+<div class="card">
+    <div class="card-header">
+        Lista Ofert
+    </div>
+    @if (!Model.ContractorOffers.Any())
+    {
+    <div>
+        <h4 style="width:50% ; margin:auto ; padding:15px">Brak ofert spełniających krytera wyszukiwania</h4>
+    </div>
+    }
+    else
+    {
+
+        <div class="card-body">
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Temat Oferty</th>
+                        <th>Typ</th>
+                        <th>Kontrahent</th>
+                        <th>Pracownik</th>
+                        <th>Data Ważności</th>
+                        <th>Data Akceptacji</th>
+                        <th>Data Dodania</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var contractorOffer in Model.ContractorOffers)
+                    {
+                        <tr>
+                            <td>@Html.ActionLink(contractorOffer.OfferName, "Details", "ContractorOffer", new { id = contractorOffer.Id }, null)</td>
+                            <td>@contractorOffer.ContractorOfferType.OfferTypeName</td>
+                            <td>@contractorOffer.Contractor.Name</td>
+                            <td>@contractorOffer.ContractorEmployee.FullName</td>
+                            <td>@{var exDate = String.Format("{0:yyyy-MM-dd}", contractorOffer.ExpirationDate); } @Html.DisplayTextFor(m => exDate)</td>
+                            <td>@{var acDate = String.Format("{0:yyyy-MM-dd}", contractorOffer.AcceptanceDate); } @Html.DisplayTextFor(m => acDate)</td>
+                            <td>@{var addDate = String.Format("{0:yyyy-MM-dd}", contractorOffer.AddDate); } @Html.DisplayTextFor(m => addDate)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+    }
+</div>
+
+

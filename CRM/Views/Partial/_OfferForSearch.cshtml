@@ -1,0 +1,40 @@
+﻿@model CRM.ViewModels.SearchOfferViewModel
+
+
+<div class="card" style="margin-bottom: 35px">
+    <div class="card-header">
+        Wyszukiwarka Ofert
+    </div>
+    <div class="card-body">
+
+        @using (Html.BeginForm("Index", "ContractorOffer"))
+        {
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                @Html.LabelFor(m => m.ContractorOffer.Contractor.Name, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.ContractorOffer.Contractor.Name, new { @class = "form-control" })
+                @Html.HiddenFor(m => m.ContractorOffer.Contractor.Id)
+            </div>
+            <div class="form-group col-md-3">
+                @Html.LabelFor(m => m.ContractorOffer.ContractorEmployee.FullName, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.ContractorOffer.ContractorEmployee.FullName, new { @class = "form-control" })
+                @Html.HiddenFor(m => m.ContractorOffer.ContractorEmployee.Id)
+            </div>
+            <div class="form-group col-md-3">
+                @Html.LabelFor(m => m.ContractorOffer.ContractorOfferTypeId)
+                @Html.DropDownListFor(m => m.ContractorOffer.ContractorOfferTypeId, new SelectList(Model.ContractorOfferTypes, "Id", "OfferTypeName"), "Wybierz typ oferty", new { @class = "form-control" })
+            </div>
+            <div class="form-group col-md-3">
+                <div><button type="submit" class="btn btn-primary btn-block" style="margin-top: 29px">Szukaj</button></div>
+            </div>
+        </div>
+        }
+    </div>
+
+</div>
+<div class="hidden" id="OfferView"></div>
+
+@Html.Partial("~/Views/ScriptsJS/_getContractorDropDownList.cshtml")
+@Html.Partial("~/Views/ScriptsJS/_getContractorEmployeeDropDownList.cshtml")
+
+

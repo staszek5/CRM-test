@@ -1,0 +1,198 @@
+﻿@model CRM.ViewModels.NewContractorViewModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .tab--border {
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 0.25rem;
+    }
+
+    .tab-content {
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+        /* border-bottom: 1px solid #ddd;
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem; */
+        padding: 10px;
+    }
+
+    .nav-tabs {
+        margin-bottom: 0;
+    }
+
+    .tabs-card {
+        padding-left: 5px;
+        padding-right: 5px;
+        margin-right: 15px;
+        margin-left: 15px;
+    }
+
+    .card-internal {
+        margin-bottom: 15px;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header text-white bg-primary mb-3">
+            Karta Kontrahenta
+        </div>
+        <div class="tabs-card">
+            <!-- <br> -->
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#home">Dane Kontrahenta</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#menu1">Osoby Kontaktowe</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#menu2">Notatki</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#menu3">Zadania</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#menu4">Złożone Oferty</a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- coul be partial view for each tab -->
+                <div id="home" class=" tab-pane active">
+                    <br>
+                    @Html.Partial("~/Views/Partial/_ContractorNewOrDetails.cshtml")
+
+                </div>
+                <div id="menu1" class=" tab-pane fade">
+                    <br>
+                    <div class="container-fluid">
+                        <table class="table table-striped table-bordered table-hover table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Imię i nazwisko</th>
+                                    <th>Ważność</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var contractorEmployee in Model.ContractorEmployees)
+                                {
+                                    <tr>
+                                        <td>@Html.ActionLink(contractorEmployee.FullName, "Details", "ContractorEmployee", new { id = contractorEmployee.Id }, null)</td>
+                                        @*<td>@contractorEmployee.FullName</td>*@
+                                        @*<td>@Html.ActionLink(contractorEmployee.Name, "Details2", "Contractor", new { id = contractorEmployee.Id }, null)</td>*@
+                                        <td>@contractorEmployee.EmployeeSignificance.EmployeeSignificanceName</td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="menu2" class=" tab-pane fade">
+                    <br>
+                    <div class="container-fluid">
+                        <table class="table table-striped table-bordered table-hover table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Temat</th>
+                                    <th>Pracownik</th>
+                                    <th>Data Dodania</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var note in Model.Notes)
+                                {
+                                    <tr>
+                                        <td>@Html.ActionLink(note.NoteName, "Details", "Note", new { id = note.Id }, null)</td>
+                                        @*<td>@contractorEmployee.FullName</td>*@
+                                        @*<td>@Html.ActionLink(contractorEmployee.Name, "Details2", "Contractor", new { id = contractorEmployee.Id }, null)</td>*@
+                                        <td>@note.ContractorEmployee.FullName</td>
+                                        <td>@{var noteAddDate = String.Format("{0:yyyy-MM-dd}", note.AddDate);} @Html.DisplayFor(m => noteAddDate)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="menu3" class=" tab-pane fade">
+                    <br>
+                    <div class="container-fluid">
+                        <table class="table table-striped table-bordered table-hover table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Temat</th>
+                                    <th>Pracownik</th>
+                                    <th>Typ Zadania</th>
+                                    <th>Data Wykonania</th>
+                                    <th>Data Dodania</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var task in Model.Tasks)
+                                {
+                                <tr>
+                                    <td>@Html.ActionLink(task.TaskName, "Details", "UserTask", new { id = task.Id }, null)</td>
+                                    @*<td>@contractorEmployee.FullName</td>*@
+                                    @*<td>@Html.ActionLink(contractorEmployee.Name, "Details2", "Contractor", new { id = contractorEmployee.Id }, null)</td>*@
+                                    <td>@task.ContractorEmployee.FullName</td>
+                                    <td>@task.UserTaskType.TaskTypeName</td>
+                                    <td>@{var taskDueDate = String.Format("{0:yyyy-MM-dd}", task.DueDate); } @Html.DisplayTextFor(m => taskDueDate)</td>
+                                    <td>@{var taskAddDate = String.Format("{0:yyyy-MM-dd}", task.AddDate); } @Html.DisplayTextFor(m => taskAddDate)</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div id="menu4" class=" tab-pane fade">
+                    <br>
+                    <div class="container-fluid">
+                        <table class="table table-striped table-bordered table-hover table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Temat</th>
+                                    <th>Pracownik</th>
+                                    <th>Typ Oferty</th>
+                                    <th>Data Dodania</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var offer in Model.Offers)
+                                {
+                                    <tr>
+                                        <td>@Html.ActionLink(offer.OfferName, "Details", "ContractorOffer", new { id = offer.Id }, null)</td>
+                                        @*<td>@contractorEmployee.FullName</td>*@
+                                        @*<td>@Html.ActionLink(contractorEmployee.Name, "Details2", "Contractor", new { id = contractorEmployee.Id }, null)</td>*@
+                                        <td>@offer.ContractorEmployee.FullName</td>
+                                        <td>@offer.ContractorOfferType.OfferTypeName</td>
+                                        <td>@{var offerAddDate = String.Format("{0:yyyy-MM-dd}", offer.AddDate); } @Html.DisplayTextFor(m => offerAddDate)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4 offset-8 text-right">
+            <p style="margin-right: 20px">Data Dodania: @{var date = String.Format("{0:yyyy-MM-dd}", Model.Contractor.AddDate); } @Html.DisplayTextFor(m => date)</p>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,82 @@
+﻿<script>
+    var contractorEmployeeTextBoxID;
+    var contractorEmployeeID;
+    if (document.getElementById('TaskView')) {
+
+        contractorEmployeeTextBoxID = "#UserTask_ContractorEmployee_FullName";
+        contractorEmployeeID = "#UserTask_ContractorEmployee_Id";
+
+    } else if (document.getElementById('NoteView')) {
+
+        contractorEmployeeTextBoxID = "#Note_ContractorEmployee_FullName";
+        contractorEmployeeID = "#Note_ContractorEmployee_Id";
+
+    } else if (document.getElementById('OfferView')) {
+
+        contractorEmployeeTextBoxID = "#ContractorOffer_ContractorEmployee_FullName";
+        contractorEmployeeID = "#ContractorOffer_ContractorEmployee_Id";
+    } else {
+
+        contractorEmployeeTextBoxID = "#ContractorEmployee_FullName";
+        contractorEmployeeID = "#ContractorEmployee_Id";
+    }
+
+
+
+    $(document).ready(function () {
+        $(contractorEmployeeTextBoxID).autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("GetEmployees", "ContractorEmployee")',
+                        datatype: "json",
+                        data: {
+                            term: request.term
+                        },
+                        success: function (data) {
+                            response($.map(data, function (val, item) {
+                                console.log(val);
+                                return {
+                                    label: val.Name,
+                                    value: val.Name,
+                                    employeeId: val.ID
+                                }
+                            }))
+                        }
+                    })
+                },
+                select: function (event, ui) {
+                    $(contractorEmployeeID).val(ui.item.employeeId);
+                }
+                });
+               });
+
+
+  @*$(document).ready(function () {
+                   $("#ContractorEmployee_FullName").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("GetEmployees", "ContractorEmployee")',
+                        datatype: "json",
+                        data: {
+                            term: request.term
+                        },
+                        success: function (data) {
+                            response($.map(data, function (val, item) {
+                                console.log(val);
+                                return {
+                                    label: val.Name,
+                                    value: val.Name,
+                                    employeeId: val.ID
+                                }
+                            }))
+                        }
+                    })
+                },
+                select: function (event, ui) {
+                    $("#ContractorEmployee_Id").val(ui.item.employeeId);
+                }
+                });
+               });*@
+
+</script>
+

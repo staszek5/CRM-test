@@ -1,0 +1,40 @@
+﻿@model CRM.ViewModels.SearchNoteViewModel
+
+
+
+
+<div class="card" style="margin-bottom: 35px">
+    <div class="card-header">
+        Wyszukiwarka Notatek
+    </div>
+    <div class="card-body">
+
+        @using (Html.BeginForm("Index", "Note"))
+        {
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    @Html.LabelFor(m => m.Note.NoteName)
+                    @Html.TextBoxFor(m => m.Note.NoteName, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.LabelFor(m => m.Note.Contractor.Name, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Note.Contractor.Name, new { @class = "form-control" })
+                    @Html.HiddenFor(m => m.Note.Contractor.Id)
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.Label("Pracownik", new { @class = "control-label" })
+                    @* @Html.LabelFor(m => m.ContractorEmployee.FullName, new { @class = "control-label" })*@
+                    @Html.TextBoxFor(m => m.Note.ContractorEmployee.FullName, new { @class = "form-control" })
+                    @Html.HiddenFor(m => m.Note.ContractorEmployee.Id)
+                </div>
+                <div class="form-group col-md-3">
+                    <div><button type="submit" class="btn btn-primary btn-block" style="margin-top: 29px">Szukaj</button></div>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+<div class="hidden" id="NoteView"></div>
+@Html.Partial("~/Views/ScriptsJS/_getContractorDropDownList.cshtml")
+@Html.Partial("~/Views/ScriptsJS/_getContractorEmployeeDropDownList.cshtml")

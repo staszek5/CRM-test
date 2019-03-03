@@ -1,0 +1,96 @@
+﻿@model CRM.ViewModels.SearchContractorEmployeesViewModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@using (Html.BeginForm("Save", "ContractorEmployee"))
+{
+    <div class="container-fluid">
+        @if (Model.ContractorEmployee.Id == 0)
+        {
+            <h2>Dodaj Pracownika</h2>
+        }
+        <div class="card">
+            @if (Model.ContractorEmployee.Id == 0)
+            {
+                <div class="card-header">Nowy Pracownik</div>
+            }
+            else
+            {
+                <div class="card-header">Edytuj Pracownika</div>
+            }
+
+            <div class="card-body">
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        @Html.LabelFor(m => m.ContractorEmployee.FullName)
+                        @Html.TextBoxFor(m => m.ContractorEmployee.FullName, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-md-4">
+                        @Html.LabelFor(m => m.ContractorEmployee.Position)
+                        @Html.TextBoxFor(m => m.ContractorEmployee.Position, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-md-4">
+                        @Html.LabelFor(m => m.ContractorEmployee.EmployeeSignificanceId)
+                        @Html.DropDownListFor(m => m.ContractorEmployee.EmployeeSignificanceId, new SelectList(Model.EmployeeSignificances, "Id", "EmployeeSignificanceName"), "Wybierz Rangę Pracownika", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        @Html.LabelFor(m => m.ContractorEmployee.Contractor.Name)
+                        @Html.TextBoxFor(m => m.ContractorEmployee.Contractor.Name, new { @class = "form-control" })
+                        @Html.HiddenFor(m => m.ContractorEmployee.Contractor.Id)
+                    </div>
+                    @*<div class="form-group col-md-4">
+                            @Html.LabelFor(m => m.Contractor.Name)
+                            @Html.TextBoxFor(m => m.Contractor.Name, new { @class = "form-control" })
+                            @Html.HiddenFor(m => m.Contractor.Id)
+                        </div>*@
+                    <div class="form-group col-md-4">
+                        @Html.LabelFor(m => m.ContractorEmployee.Email)
+                        @Html.TextBoxFor(m => m.ContractorEmployee.Email, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-md-4">
+                        @Html.LabelFor(m => m.ContractorEmployee.TelephoneNo)
+                        @Html.TextBoxFor(m => m.ContractorEmployee.TelephoneNo, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-8">
+                        @Html.LabelFor(m => m.ContractorEmployee.Description)
+                        @Html.TextAreaFor(m => m.ContractorEmployee.Description, new { @class = "form-control", placeholder = "Opis kontrahenta" })
+                    </div>
+
+                </div>
+                @if (Model.ContractorEmployee.Id == 0)
+                {
+                    <div class="form-row">
+                        <div class="form-group col-md-2">
+                            <button type="submit" class="btn btn-primary btn-block btn-info">Dodaj Pracownika</button>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-row">
+                        <div class="form-group col-md-2">
+                            <button type="submit" class="btn btn-primary btn-block btn-info">Zapisz Zmiany</button>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <div>@Html.ActionLink("Usuń Pracownika", "Delete", "ContractorEmployee", new { id = Model.ContractorEmployee.Id }, new { @class = "btn btn-danger btn-block" })</div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.ContractorEmployee.Id, new { @class = "datepicker-default-date" })
+}
+<div class="hidden" id="EmployeeView"></div>
+
+@Html.Partial("~/Views/ScriptsJS/_getContractorDropDownList.cshtml")

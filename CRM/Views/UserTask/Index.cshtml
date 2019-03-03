@@ -1,0 +1,64 @@
+﻿@model CRM.ViewModels.SearchTaskViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h3>Zadania</h3>
+
+@Html.Partial("~/Views/Partial/_TaskForSearch.cshtml", Model)
+
+<div class="card">
+    <div class="card-header">
+        Lista Zadań
+    </div>
+    @if (!Model.UserTasks.Any())
+    {
+        <h4 style="width:50% ; margin:auto ; padding:15px">Brak zadań spełniających krytera wyszukiwania</h4>
+    }
+    else
+    {
+        <div class="card-body">
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Temat Zadania</th>
+                        <th>Typ</th>
+                        <th>Data Wykonania</th>
+                        <th>Kontrahent</th>
+                        <th>Pracownik</th>
+                        <th>Data Dodania</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var userTask in Model.UserTasks)
+                    {
+                        <tr>
+
+                            @*<td>@Html.ActionLink(contractor.Name, "Details2", "Contractor", new { id = contractor.Id }, null)</td>*@
+                            <td>@Html.ActionLink(userTask.TaskName, "Details", "UserTask", new { id = userTask.Id }, null)</td>
+                            <td>@userTask.UserTaskType.TaskTypeName</td>
+                            <td>@{var dueDate = String.Format("{0:yyyy-MM-dd}", userTask.DueDate);} @Html.DisplayFor(m => dueDate) </td>
+                            <td>@userTask.Contractor.Name</td>
+                            <td>@userTask.ContractorEmployee.FullName</td>
+                            <td>@{var addDate = String.Format("{0:yyyy-MM-dd}", userTask.AddDate); } @Html.DisplayTextFor(m => addDate)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            @*
+                <div>
+                    @Html.LabelFor(m => m.Contractor.Name, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Contractor.Name, new { @class = "form-control" })
+                    @Html.HiddenFor(m => m.Contractor.Id)
+                </div>
+            *@
+        </div>
+    }
+</div>
+
+
+

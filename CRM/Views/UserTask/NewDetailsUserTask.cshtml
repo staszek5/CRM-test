@@ -1,0 +1,93 @@
+﻿@model CRM.ViewModels.SearchTaskViewModel
+@{
+    /**/
+
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Save", "UserTask"))
+{
+
+    <div class="container-fluid">
+
+        @if (Model.UserTask.Id == 0)
+        {
+            <h2>Dodaj Zadanie</h2>
+        }
+
+        <div class="card">
+            @if (Model.UserTask.Id == 0)
+            {
+                <div class="card-header">Nowe Zadanie</div>
+            }
+            else
+            {
+                <div class="card-header">Edytuj Zadanie</div>
+            }
+            <div class="card-body">
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        @Html.LabelFor(m => m.UserTask.TaskName)
+                        @Html.TextBoxFor(m => m.UserTask.TaskName, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-md-4">
+                        @Html.LabelFor(m => m.UserTask.Contractor.Name, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.UserTask.Contractor.Name, new { @class = "form-control" })
+                        @Html.HiddenFor(m => m.UserTask.Contractor.Id)
+                    </div>
+                    <div class="form-group col-md-4">
+                        @Html.Label("Pracownik", new { @class = "control-label" })
+                        @*@Html.LabelFor(m => m.UserTask.ContractorEmployee.FullName, new { @class = "control-label" })*@
+                        @Html.TextBoxFor(m => m.UserTask.ContractorEmployee.FullName, new { @class = "form-control" })
+                        @Html.HiddenFor(m => m.UserTask.ContractorEmployee.Id)
+                    </div>
+                </div>
+                <div class="form-row">
+
+                    <div class="form-group col-md-4">
+                        @Html.LabelFor(m => m.UserTask.TaskDescription)
+                        @Html.TextAreaFor(m => m.UserTask.TaskDescription, new { @class = "form-control", placeholder = "Treść notatki" })
+                    </div>
+                    <div class="form-group col-md-4">
+                        @Html.LabelFor(m => m.UserTask.UserTaskTypeId)
+                        @Html.DropDownListFor(m => m.UserTask.UserTaskTypeId, new SelectList(Model.UserTaskType, "Id", "TaskTypeName"), "Wybierz typ zadania", new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-md-4">
+                        @Html.LabelFor(m => m.UserTask.DueDate, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.UserTask.DueDate, new { @class = "form-control datepicker", Value = String.Format("{0:yyyy-MM-dd}", Model.UserTask.DueDate) })
+                    </div>
+                </div>
+                <div class="form-row">
+                    @if (Model.UserTask.Id == 0)
+                    {
+                        <div class="form-group col-md-2">
+                            <button type="submit" class="btn btn-primary btn-block btn-info">Dodaj Zadanie</button>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group col-md-2">
+                            <button type="submit" class="btn btn-primary btn-block btn-info">Zapisz Zmiany</button>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <div>@Html.ActionLink("Usuń Zadanie", "Delete", "UserTask", new { id = Model.UserTask.Id }, new { @class = "btn btn-danger btn-block" })</div>
+                        </div>
+                    }
+
+
+                </div>
+
+            </div>
+            @Html.HiddenFor(m => m.UserTask.Id, new { @class = "datepicker-default-date" })
+
+            @*@{string buttonName = (Model.Contractor == null) ? "Zapisz" : "Edytuj";    }*@
+
+        </div>
+    </div>
+}
+<div class="hidden" id="TaskView"></div>
+@Html.Partial("~/Views/ScriptsJS/_getContractorDropDownList.cshtml")
+@Html.Partial("~/Views/ScriptsJS/_getContractorEmployeeDropDownList.cshtml")
+@Html.Partial("~/Views/ScriptsJS/_datePicker.cshtml")

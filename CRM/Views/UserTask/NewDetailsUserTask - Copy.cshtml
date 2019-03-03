@@ -1,0 +1,60 @@
+﻿@model CRM.ViewModels.SearchTaskViewModel
+@{
+    /**/
+
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Save", "UserTask"))
+{
+
+    <div class="container-fluid">
+        <h2>Dodaj Notatkę</h2>
+        <div class="card">
+            <div class="card-header">Nowa Notatka</div>
+
+            <div class="card-body">
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        @Html.LabelFor(m => m.UserTask.TaskName)
+                        @Html.TextBoxFor(m => m.UserTask.TaskName, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group col-md-4">
+                        @Html.LabelFor(m => m.Contractor.Name, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Contractor.Name, new { @class = "form-control" })
+                        @Html.HiddenFor(m => m.Contractor.Id)
+                    </div>
+                    <div class="form-group col-md-4">
+                        @Html.LabelFor(m => m.ContractorEmployee.FullName, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.ContractorEmployee.FullName, new { @class = "form-control" })
+                        @Html.HiddenFor(m => m.ContractorEmployee.Id)
+                    </div>
+                </div>
+                <div class="form-row">
+
+                    <div class="form-group col-md-4">
+                        @Html.LabelFor(m => m.UserTask.TaskDescription)
+                        @Html.TextAreaFor(m => m.UserTask.TaskDescription, new { @class = "form-control", placeholder = "Treść notatki" })
+                    </div>
+                    <div class="form-group col-md-4">
+                        @Html.LabelFor(m => m.UserTask.UserTaskTypeId)
+                        @Html.DropDownListFor(m => m.UserTask.UserTaskTypeId, new SelectList(Model.UserTaskType, "Id", "TaskTypeName"), "Wybierz typ zadania", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <button type="submit" class="btn btn-primary btn-block btn-info">Zapisz</button>
+                    </div>
+                </div>
+
+            </div>
+            @Html.HiddenFor(m => m.Contractor.Id)
+            @*@{string buttonName = (Model.Contractor == null) ? "Zapisz" : "Edytuj";    }*@
+
+        </div>
+    </div>
+}
+@Html.Partial("~/Views/ScriptsJS/_getContractorDropDownList.cshtml")
+@Html.Partial("~/Views/ScriptsJS/_getContractorEmployeeDropDownList.cshtml")

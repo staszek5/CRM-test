@@ -1,0 +1,95 @@
+﻿@model CRM.Models.Note
+@{
+    /**/
+
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+@*@{ Html.EnableClientValidation(false);
+    Html.EnableUnobtrusiveJavaScript(false);}*@
+@using (Html.BeginForm("Save", "Note", FormMethod.Post, new { @novalidate = "" }))
+{
+
+    <div class="container-fluid">
+        @if (Model.Id == 0)
+        {
+            <h2>Dodaj Notatkę</h2>
+        }
+        <div class="card">
+            @if (Model.Id == 0)
+            {
+                <div class="card-header">Nowa Notatka</div>
+            }
+            else
+            {
+                <div class="card-header">Edytuj Notatkę</div>
+            }
+            <div class="card-body">
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        @Html.LabelFor(m => m.NoteName)
+                        @Html.TextBoxFor(m => m.NoteName, new { @class = "form-control" , @novalidate = "novalidate" })
+                        @Html.ValidationMessageFor(m => m.NoteName)
+                    </div>
+                    <div class="form-group col-md-4">
+                        @Html.LabelFor(m => m.Contractor.Name, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Contractor.Name, new { @class = "form-control" })
+                        @Html.HiddenFor(m => m.Contractor.Id)
+                        @Html.ValidationMessageFor(m => m.Contractor.Id)
+                    </div>
+                    @*<div class="form-group col-md-4">
+                            @Html.LabelFor(m => m.Contractor.Name, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.Contractor.Name, new { @class = "form-control" })
+                            @Html.HiddenFor(m => m.Contractor.Id)
+                        </div>
+                        <div class="form-group col-md-4">
+                            @Html.LabelFor(m => m.ContractorEmployee.FullName, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.ContractorEmployee.FullName, new { @class = "form-control" })
+                            @Html.HiddenFor(m => m.ContractorEmployee.Id)
+                        </div>*@
+                    <div class="form-group col-md-4">
+                        @Html.LabelFor(m => m.ContractorEmployee.FullName, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.ContractorEmployee.FullName, new { @class = "form-control" })
+                        @Html.HiddenFor(m => m.ContractorEmployee.Id)
+                        @Html.ValidationMessageFor(m => m.ContractorEmployee.Id)
+                    </div>
+                </div>
+                <div class="form-row">
+
+                    <div class="form-group col-md-5">
+                        @Html.LabelFor(m => m.NoteDescription)
+                        @Html.TextAreaFor(m => m.NoteDescription, new { @class = "form-control", placeholder = "Treść notatki" })
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    @if (Model.Id == 0)
+                    {
+                        <div class="form-group col-md-2">
+                            <button type="submit" class="btn btn-primary btn-block btn-info">Dodaj Notatkę</button>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group col-md-2">
+                            <button type="submit" class="btn btn-primary btn-block btn-info">Zapisz Zmiany</button>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <div>@Html.ActionLink("Usuń Notatkę", "Delete", "Note", new { id = Model.Id }, new { @class = "btn btn-danger btn-block" })</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        @*@Html.HiddenFor(m => m.Contractor.Id)*@
+        @*@{string buttonName = (Model.Contractor == null) ? "Zapisz" : "Edytuj";    }*@
+
+    </div>
+
+}
+@*<div class="hidden" id="NoteView"></div>*@
+
+@*@Html.Partial("~/Views/ScriptsJS/_getContractorDropDownList.cshtml")
+    @Html.Partial("~/Views/ScriptsJS/_getContractorEmployeeDropDownList.cshtml")*@

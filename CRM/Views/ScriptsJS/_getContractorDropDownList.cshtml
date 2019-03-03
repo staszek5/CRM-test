@@ -1,0 +1,61 @@
+﻿<script>
+
+    var contractorTextBoxID;
+    var contractorID;
+    if (document.getElementById('TaskView')) {
+
+        contractorTextBoxID = "#UserTask_Contractor_Name";
+        contractorID = "#UserTask_Contractor_Id";
+
+    } else if (document.getElementById('NoteView')) {
+
+        contractorTextBoxID = "#Note_Contractor_Name";
+        contractorID = "#Note_Contractor_Id";
+
+    } else if (document.getElementById('OfferView')) {
+
+        contractorTextBoxID = "#ContractorOffer_Contractor_Name";
+        contractorID = "#ContractorOffer_Contractor_Id";
+
+    } else if (document.getElementById('EmployeeView')) {
+
+        contractorTextBoxID = "#ContractorEmployee_Contractor_Name";
+        contractorID = "#ContractorEmployee_Contractor_Id";
+
+    } else {
+
+        contractorTextBoxID = "#Contractor_Name";
+        contractorID = "#Contractor_Id";
+    }
+    
+
+               $(document).ready(function () {
+                   $(contractorTextBoxID).autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '@Url.Action("GetContractor", "Contractor")',
+                        datatype: "json",
+                        data: {
+                            term: request.term
+                        },
+                        success: function (data) {
+                            response($.map(data, function (val, item) {
+                                console.log(val);
+                                return {
+                                    label: val.Name,
+                                    value: val.Name,
+                                    customerId: val.ID
+                                }
+                            }))
+                        }
+                    })
+                },
+                select: function (event, ui) {
+                    $(contractorID).val(ui.item.customerId);
+                    
+                    console.log(ui.item.customerId);
+                    
+                }
+                });
+               });
+</script>

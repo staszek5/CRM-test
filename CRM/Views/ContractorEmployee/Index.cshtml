@@ -1,0 +1,49 @@
+﻿
+@model CRM.ViewModels.SearchContractorEmployeesViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Pracownicy</h2>
+
+    @Html.Partial("~/Views/Partial/_ContractorEmployeeForSearch.cshtml", Model)
+
+    
+
+<div class="card" style="margin-bottom: 35px">
+    <div class="card-header">
+        Lista Pracowników
+    </div>
+    @if (!Model.ContractorEmployees.Any())
+    {
+    <h4 style="width:50% ; margin:auto ; padding:15px">Brak pracowników spełniających krytera wyszukiwania</h4>
+    }
+    else
+    {
+        <div class="card-body">
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Imię i Nazwisko</th>
+                        <th>Ranga Pracownika</th>
+                        <th>Stanowisko</th>
+                        <th>Firma</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var employee in Model.ContractorEmployees)
+                    {
+                        <tr>
+                            <td>@Html.ActionLink(employee.FullName, "Details", "ContractorEmployee", new { id = employee.Id }, null)</td>
+                            <td>@employee.EmployeeSignificance.EmployeeSignificanceName</td>
+                            <td>@employee.Position</td>
+                            <td>@employee.Contractor.Name</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    </div>
+

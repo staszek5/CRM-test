@@ -1,0 +1,59 @@
+﻿@model CRM.ViewModels.SearchNoteViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<h3>Notatki</h3>
+
+    @Html.Partial("~/Views/Partial/_NoteForSearch.cshtml", Model)
+
+<div class="card">
+    <div class="card-header">
+        Lista Notatek
+    </div>
+    @if (!Model.Notes.Any())
+    {
+         <h4 style="width:50% ; margin:auto ; padding:15px">Brak notatek spełniających krytera wyszukiwania</h4>
+    }
+    else
+    {
+        <div class="card-body">
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Temat Notatki</th>
+                        <th>Kontrahent</th>
+                        <th>Pracownik</th>
+                        <th>Data Dodania</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var note in Model.Notes)
+                    {
+                        <tr>
+                            <td>@Html.ActionLink(note.NoteName, "Details", "Note", new { id = note.Id }, null)</td>
+                            @*<td>@note.NoteName</td>*@
+                            <td>@note.Contractor.Name</td>
+                            <td>@note.ContractorEmployee.FullName</td>
+                            <td>@{var date = String.Format("{0:yyyy-MM-dd}", note.AddDate); } @Html.DisplayTextFor(m => date)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            @*
+                <div>
+                    @Html.LabelFor(m => m.Contractor.Name, new { @class = "control-label" })
+                    @Html.TextBoxFor(m => m.Contractor.Name, new { @class = "form-control" })
+                    @Html.HiddenFor(m => m.Contractor.Id)
+                </div>
+            *@
+        </div>
+    }
+</div>
+
+
+

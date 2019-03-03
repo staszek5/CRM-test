@@ -1,0 +1,92 @@
+﻿@model CRM.ViewModels.SearchContractorsViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Kontrahenci</h3>
+
+@Html.Partial("~/Views/Partial/_ContractorForSearch.cshtml", Model)
+
+<div class="card">
+    <div class="card-header">
+        Lista Kontrahentów
+    </div>
+    @if (!Model.Contractors.Any())
+    {
+        <h4 style="width:50% ; margin:auto ; padding:15px">Brak kontrahentów spełniających krytera wyszukiwania</h4>
+    }
+    else
+    {
+        <div class="card-body">
+
+            <table class="table table-bordered table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>@Html.ActionLink("Nazwa Kontrahenta", "Index", new { sortOrder = ViewBag.NameSortParam })</th>
+                        <th>@Html.ActionLink("Grupa", "Index", new { sortOrder = ViewBag.CooperationTypeSortParam })</th>
+                        <th>@Html.ActionLink("Branża", "Index", new { sortOrder = ViewBag.BranchSortParam })</th>                      
+                        <th>Email</th>
+                        <th>Numer Telefonu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var contractor in Model.Contractors)
+                    {
+                        <tr>                            
+                            <td>@Html.ActionLink(contractor.Name, "Details", "Contractor", new { id = contractor.Id }, null)</td>
+                            <td>@contractor.CooperationType.CooperationTypeName</td>
+                            <td>@contractor.ContractorBranch.ContractorBranchName</td>
+                            <td>@contractor.Email</td>
+                            <td>@contractor.TelephoneNo</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@Html.Partial("~/Views/ScriptsJS/_getContractorDropDownList.cshtml")
+
+
+@*<div>
+        <label class="control-label" for="Contractor_Name2">Nazwa Kontrahenta</label>
+        <input class="form-control" id="Contractor_Name2" name="Contractor.Name" type="text" value="">
+        <input data-val="true" data-val-number="The field Id must be a number." data-val-required="The Id field is required." id="Contractor_Id" name="Contractor.Id" type="hidden" value="">
+    </div>
+    <script>
+        $(document).ready(function () {
+            console.log("ready!");
+            //alert("Hello! I am an alert box!!");
+        });
+    </script>
+    <script>
+           $(document).ready(function () {
+               alert("before autocompleate");
+            $("#Contractor_Name").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("GetContractor", "Contractor")',
+                    datatype: "json",
+                    data: {
+                        term: request.term
+                    },
+                    success: function (data) {
+                        response($.map(data, function (val, item) {
+                            return {
+                                label: val.Name,
+                                value: val.Name,
+                                customerId: val.ID
+                            }
+                        }))
+                    }
+                })
+            },
+            select: function (event, ui) {
+                $("#Contractor_Id").val(ui.item.customerId);
+            }
+        });
+               alert("end autocompleate");
+           });
+    </script>*@

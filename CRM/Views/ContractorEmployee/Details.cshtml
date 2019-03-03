@@ -1,0 +1,14 @@
+﻿@model CRM.Models.ContractorEmployee
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.FullName</h2>
+<ul>
+    <li>Imię i nazwisko: @Model.FullName</li>
+    <li>Znaczenie w firmie: @Model.EmployeeSignificance.EmployeeSignificanceName</li>
+    <li>Data dodania: @Model.AddDate.Value.ToString("dd/MM/yyyy")</li>
+    <li>Data dodania: @Model.AddDate.Value.ToLongDateString()</li>
+</ul>
+

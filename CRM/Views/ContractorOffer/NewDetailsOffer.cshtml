@@ -1,0 +1,112 @@
+﻿@model CRM.ViewModels.SearchOfferViewModel
+@{
+    /**/
+
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@using (Html.BeginForm("Save", "ContractorOffer"))
+{
+
+<div class="container-fluid">
+    @if (Model.ContractorOffer.Id == 0)
+    {
+        <h3>Dodaj Ofertę</h3>
+    }
+
+    <div class="card">
+        @if (Model.ContractorOffer.Id == 0)
+        {
+            <div class="card-header">Nowa Oferta/Zamówienie</div>
+        }
+        else
+        {
+            <div class="card-header">Edytuj Ofertę/Zamówienie</div>
+        }
+
+        <div class="card-body">
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.ContractorOffer.OfferName)
+                    @Html.TextBoxFor(m => m.ContractorOffer.OfferName, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.Label("Nazwa Kontrahenta (firma)", new { @class = "control-label" })
+                    @*@Html.LabelFor(m => m.Contractor.Name, new { @class = "control-label" })*@
+                    @Html.TextBoxFor(m => m.ContractorOffer.Contractor.Name, new { @class = "form-control" })
+                    @Html.HiddenFor(m => m.ContractorOffer.Contractor.Id)
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.Label("Imię i Nazwisko (kontrahent)", new { @class = "control-label" })
+                    @*@Html.LabelFor(m => m.ContractorEmployee.FullName, new { @class = "control-label" })*@
+                    @Html.TextBoxFor(m => m.ContractorOffer.ContractorEmployee.FullName, new { @class = "form-control" })
+                    @Html.HiddenFor(m => m.ContractorOffer.ContractorEmployee.Id)
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.ContractorOffer.ExpirationDate, new { @class = "control-label" })
+                    @*@Html.TextBoxFor(m => m.ContractorOffer.ExpirationDate, new { @class = "form-control datepicker" })*@
+                    @Html.TextBoxFor(m => m.ContractorOffer.ExpirationDate, new { @class = "form-control datepicker", Value = String.Format("{0:yyyy-MM-dd}", Model.ContractorOffer.ExpirationDate) })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.ContractorOffer.AcceptanceDate, new { @class = "control-label" })
+                    @*@Html.TextBoxFor(m => m.ContractorOffer.AcceptanceDate, new { @class = "form-control datepicker" })*@
+                    @Html.TextBoxFor(m => m.ContractorOffer.AcceptanceDate, new { @class = "form-control datepicker", Value = String.Format("{0:yyyy-MM-dd}", Model.ContractorOffer.AcceptanceDate) })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.ContractorOffer.ContractorOfferTypeId)
+                    @Html.DropDownListFor(m => m.ContractorOffer.ContractorOfferTypeId, new SelectList(Model.ContractorOfferTypes, "Id", "OfferTypeName"), "Wybierz typ oferty", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-row">
+
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.ContractorOffer.OfferDesctiption)
+                    @Html.TextAreaFor(m => m.ContractorOffer.OfferDesctiption, new { @class = "form-control", placeholder = "Treść oferty" })
+                </div>
+
+            </div>
+            @if (Model.ContractorOffer.Id == 0)
+            {
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <button type="submit" class="btn btn-primary btn-block btn-info">Dodaj Ofertę</button>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <button type="submit" class="btn btn-primary btn-block btn-info">Zapisz Zmiany</button>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <div>@Html.ActionLink("Usuń Ofertę", "Delete", "ContractorOffer", new { id = Model.ContractorOffer.Id }, new { @class = "btn btn-danger btn-block" })</div>
+                    </div>
+                </div>
+            }
+
+
+        </div>
+        @Html.HiddenFor(m => m.ContractorOffer.Id, new { @class = "datepicker-default-date" })
+        @*@{string buttonName = (Model.Contractor == null) ? "Zapisz" : "Edytuj";    }*@
+
+    </div>
+</div>
+
+}
+
+<div class="hidden" id="OfferView"></div>
+
+
+
+@Html.Partial("~/Views/ScriptsJS/_getContractorDropDownList.cshtml")
+@Html.Partial("~/Views/ScriptsJS/_getContractorEmployeeDropDownList.cshtml")
+@Html.Partial("~/Views/ScriptsJS/_datePicker.cshtml")
+
+

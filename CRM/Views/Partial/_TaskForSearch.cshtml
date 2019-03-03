@@ -1,0 +1,47 @@
+﻿@model CRM.ViewModels.SearchTaskViewModel
+
+
+
+<div class="card" style="margin-bottom: 35px">
+    <div class="card-header">
+        Wyszukiwarka Zadań
+    </div>
+    <div class="card-body">
+
+        @using (Html.BeginForm("Index", "UserTask"))
+        {
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                @Html.LabelFor(m => m.UserTask.UserTaskTypeId)
+                @Html.DropDownListFor(m => m.UserTask.UserTaskTypeId, new SelectList(Model.UserTaskType, "Id", "TaskTypeName"), "Wybierz typ zadania", new { @class = "form-control" })
+
+            </div>
+            <div class="form-group col-md-3">
+                @Html.LabelFor(m => m.UserTask.Contractor.Name, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.UserTask.Contractor.Name, new { @class = "form-control" })
+                @Html.HiddenFor(m => m.UserTask.Contractor.Id)
+            </div>
+            <div class="form-group col-md-3">
+                @Html.LabelFor(m => m.UserTask.ContractorEmployee.FullName, new { @class = "control-label" })
+                @Html.TextBoxFor(m => m.UserTask.ContractorEmployee.FullName, new { @class = "form-control" })
+                @Html.HiddenFor(m => m.UserTask.ContractorEmployee.Id)
+            </div>
+            <div class="form-group col-md-3">
+                <div><button type="submit" class="btn btn-primary btn-block" style="margin-top: 29px">Szukaj</button></div>
+            </div>
+        </div>
+
+            <div class="form-row">                
+                
+            </div>
+
+
+
+        }
+    </div>
+
+</div>
+<div class="hidden" id="TaskView"></div>
+
+@Html.Partial("~/Views/ScriptsJS/_getContractorEmployeeDropDownList.cshtml")
+@Html.Partial("~/Views/ScriptsJS/_getContractorDropDownList.cshtml")

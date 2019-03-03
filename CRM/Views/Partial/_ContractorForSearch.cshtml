@@ -1,0 +1,52 @@
+﻿@model CRM.ViewModels.SearchContractorsViewModel
+
+<div class="card" style="margin-bottom: 35px">
+    <div class="card-header">
+        Wyszukiwarka Kontrahentów
+    </div>
+    <div class="card-body">
+       
+        @using (Html.BeginForm("Index", "Contractor"))
+        {
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    @Html.LabelFor(m => m.Contractor.Name)
+                    @Html.TextBoxFor(m => m.Contractor.Name, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.LabelFor(m => m.Contractor.ContractorBranchId)
+                    @Html.DropDownListFor(m => m.Contractor.ContractorBranchId, new SelectList(Model.ContractorBranches, "Id", "ContractorBranchName"), "Wybierz obszar działania", new { @class = "form-control" })
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.LabelFor(m => m.Contractor.CooperationTypeId)
+                    @Html.DropDownListFor(m => m.Contractor.CooperationTypeId, new SelectList(Model.CooperationTypes, "Id", "CooperationTypeName"), "Wybierz rodzaj współpracy", new { @class = "form-control" })
+                    
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.LabelFor(m => m.Contractor.Email)
+                    @Html.TextBoxFor(m => m.Contractor.Email, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    @Html.LabelFor(m => m.Contractor.TelephoneNo)
+                    @Html.TextBoxFor(m => m.Contractor.TelephoneNo, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.LabelFor(m => m.Contractor.City)
+                    @Html.TextBoxFor(m => m.Contractor.City, new { @class = "form-control", placeholder = "Nazwa miasta" })
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.LabelFor(m => m.Contractor.ProvinceId)
+                    @Html.DropDownListFor(m => m.Contractor.ProvinceId, new SelectList(Model.Provinces, "Id", "ProvinceName"), "Wybierz województw", new { @class = "form-control" })
+                </div>
+                <div class="form-group col-md-3">
+
+                    <div><button type="submit" class="btn btn-primary btn-block" style="margin-top: 29px">Szukaj</button></div>
+                </div>
+
+            </div>
+        }
+    </div>
+
+</div>

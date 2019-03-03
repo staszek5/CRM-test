@@ -1,0 +1,64 @@
+﻿<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+<div>    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light pt-0 mb-5 ">
+        <a class="navbar-brand" >CRM</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a href="@Url.Action("Index", "Home")" class="nav-link fas fa-home" style="font-size: 23px;"></a>                  
+                </li>        
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Kontrahenci
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        @Html.ActionLink("Dodaj Kontrahenta", "New", "Contractor", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Lista Kontrahentów", "Index", "Contractor", null, new { @class = "dropdown-item" })
+                    </div>
+
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Pracownicy
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        @Html.ActionLink("Dodaj Pracownika", "New", "ContractorEmployee", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Lista Pracowników", "Index", "ContractorEmployee", null, new { @class = "dropdown-item" })
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Notatki
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        @Html.ActionLink("Dodaj Notatkę", "New", "Note", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Lista Notatek", "Index", "Note", null, new { @class = "dropdown-item" })
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Zadania
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        @Html.ActionLink("Dodaj Zadanie", "New", "UserTask", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Lista Zadań", "Index", "UserTask", null, new { @class = "dropdown-item" })
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Oferty/Zamówienia
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        @Html.ActionLink("Dodaj Ofertę/Zamówienie", "New", "ContractorOffer", null, new { @class = "dropdown-item" })
+                        @Html.ActionLink("Lista Ofert/Zamówień", "Index", "ContractorOffer", null, new { @class = "dropdown-item" })
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+

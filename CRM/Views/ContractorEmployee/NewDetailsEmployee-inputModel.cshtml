@@ -1,0 +1,65 @@
+﻿@model CRM.Models.ContractorEmployee
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    @if (Model.ContractorEmployee == null)
+    {
+        <h2>Dodaj Pracownika</h2>
+    }
+    <div class="card">
+        <div class="card-header">Indormacje o Pracowniku</div>
+
+        <div class="card-body">
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.FullName)
+                    @Html.TextBoxFor(m => m.FullName, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Position)
+                    @Html.TextBoxFor(m => m.Position, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.EmployeeSignificanceId)
+                    @Html.DropDownListFor(m => m.EmployeeSignificanceId, new SelectList(Model.EmployeeSignificances, "Id", "EmployeeSignificanceName"), "Wybierz Rangę Pracownika", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Contractor.Name)
+                    @Html.TextBoxFor(m => m.Contractor.Name, new { @class = "form-control" })
+                    @Html.HiddenFor(m => m.Contractor.Id)
+                </div>
+                @*<div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Contractor.Name)
+                    @Html.TextBoxFor(m => m.Contractor.Name, new { @class = "form-control" })
+                    @Html.HiddenFor(m => m.Contractor.Id)
+                </div>*@
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.Email)
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                </div>
+                <div class="form-group col-md-4">
+                    @Html.LabelFor(m => m.TelephoneNo)
+                    @Html.TextBoxFor(m => m.TelephoneNo, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-8">
+                    @Html.LabelFor(m => m.Description)
+                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Opis kontrahenta" })
+                </div>
+
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <button type="submit" class="btn btn-primary btn-block btn-info">Zapisz</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("~/Views/ScriptsJS/_getContractorDropDownList2.cshtml")

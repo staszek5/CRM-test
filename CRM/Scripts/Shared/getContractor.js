@@ -1,0 +1,26 @@
+ $(document).ready(function () {
+        $("#Contractor_Name").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '@Url.Action("GetContractor", "Contractor")',
+                datatype: "json",
+                data: {
+                    term: request.term
+                },
+                success: function (data) {
+                    response($.map(data, function (val, item) {
+                        console.log(val);
+                        return {
+                            label: val.Name,
+                            value: val.Name,
+                            customerId: val.ID
+                        }
+                    }))
+                }
+            })
+        },
+        select: function (event, ui) {
+            $("#Contractor_Id").val(ui.item.customerId);
+        }
+        });
+       });
